@@ -463,7 +463,7 @@ However as we saw above we can use point-range plots to plot these same data.
 
 :::{.exercise}
 
-- Use `stat_summary` (as shown above) to plot the mean and standard errors, as shon in Egger Figure 2 (an example is shown below).
+- Use `stat_summary` (as shown above) to plot the mean and standard errors, as shown in Egger Figure 2 (an example is shown below).
 
 
 
