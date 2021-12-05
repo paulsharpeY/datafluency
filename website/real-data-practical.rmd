@@ -274,8 +274,7 @@ For example, this plot shows changes in weight in the funimagery dataset from ba
 funimagery %>% 
   ggplot(aes(intervention, kg2-kg1)) + 
   stat_summary(fun.data = mean_cl_normal) +
-  geom_hline(yintercept = 0) + 
-  geom_hline(yintercept = -1, color="blue", linetype="dotted") + 
+  geom_hline(yintercept = 0) +
   labs(y="Change in weight post intervention (kg)")
 ```
 
