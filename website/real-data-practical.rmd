@@ -145,12 +145,12 @@ distracting. Sometimes, showing only the mean and standard error _is_ what you w
 
 If so, a point-range plot is better:
 
-```{r, }
-funimagery.long %>% 
+```{r}
+previous.pointrange.plot <- funimagery.long %>%
   ggplot(aes(paste("Time", time), value, color=intervention)) + 
   stat_summary(position=position_dodge(width=.1)) +
   labs(y="Weight lost post-intervention (kg)", x="", color="")
-  
+previous.pointrange.plot
 ```
 
 **Explanation of the code** We replaced `geom_boxplot` with `stat_summary`. In doing so I also set one of the options of `stat_summary`
@@ -159,14 +159,6 @@ funimagery.long %>%
 
 
 You can improve this plot again by connecting the dots:
-
-```{r, echo=F, include=F}
-previous.pointrange.plot <- funimagery.long %>% 
-  ggplot(aes(paste("Time", time), value, color=intervention)) + 
-  stat_summary(position=position_dodge(width=.1)) +
-  labs(y="Weight lost post-intervention (kg)", x="", color="")
-```
-
 
 ```{r}
 previous.pointrange.plot + 
