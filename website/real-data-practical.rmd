@@ -143,14 +143,14 @@ funimagery.long %>%
 However, when we want to show the _average difference_ between groups plotting the full range of data can be
 distracting. Sometimes, showing only the mean and standard error _is_ what you want. 
 
-If so, a point-range plot is better:
+If so, a point-range plot is better. We can generate one using `stat_summary`, which is a bit like `summarise`, except that it applies a new graphic layer to a plot:
 
-```{r}
-previous.pointrange.plot <- funimagery.long %>%
+```{r, }
+funimagery.long %>% 
   ggplot(aes(paste("Time", time), value, color=intervention)) + 
   stat_summary(position=position_dodge(width=.1)) +
   labs(y="Weight lost post-intervention (kg)", x="", color="")
-previous.pointrange.plot
+  
 ```
 
 **Explanation of the code** We replaced `geom_boxplot` with `stat_summary`. In doing so I also set one of the options of `stat_summary`
@@ -160,7 +160,17 @@ previous.pointrange.plot
 
 You can improve this plot again by connecting the dots:
 
+```{r, echo=T, include=F}
+# re-make the same plot and store it in a variable
+previous.pointrange.plot <- funimagery.long %>% 
+  ggplot(aes(paste("Time", time), value, color=intervention)) + 
+  stat_summary(position=position_dodge(width=.1)) +
+  labs(y="Weight lost post-intervention (kg)", x="", color="")
+```
+
+
 ```{r}
+# add the extra lines to the saved plot
 previous.pointrange.plot + 
   stat_summary(geom="line", aes(group=intervention))
 ```
@@ -225,7 +235,7 @@ funimagery.long %>%
 # Adding lines to a plot
 
 Sometimes it can be helpful to add lines to a plot: for example to show a clinically meaningful
-cut-off, or the mean of a sample.
+cut-off, or the median of a sample.
 
 For example, let's say we want to make a scatter plot of income in the `earnings` data, but adding a
 line showing the median income. First we calculate the median:
@@ -235,7 +245,7 @@ median_income <-  earnings %>% summarise(median(income)) %>% pull(1)
 ```
 
 **Explanation**: First, we are defining a new variable to equal the mean income in the sample. We do
-this by using `summarise(median(income))`. The part which reads `pull(1)` says "take the first
+this by using `summarise(mean(income))`. The part which reads `pull(1)` says "take the first
 column". We need to do this because `summarise()` creates a new table, rather than a single value or
 sequence of values (which we need below).
 
@@ -274,7 +284,7 @@ For example, this plot shows changes in weight in the funimagery dataset from ba
 funimagery %>% 
   ggplot(aes(intervention, kg2-kg1)) + 
   stat_summary(fun.data = mean_cl_normal) +
-  geom_hline(yintercept = 0) +
+  geom_hline(yintercept = 0) + 
   labs(y="Change in weight post intervention (kg)")
 ```
 
@@ -339,7 +349,7 @@ Use tidyverse commands including `pivot_longer`, `separate` and `mutate` to crea
 
 ```{r, echo=F}
 step1 <- egger.subset %>% 
-  set_names(c("id", "condition", "gender", "maths 1", "maths 2", "spelling 1", "spelling 2", "reading 1", "reading 2")) %>% 
+  set_names(c("id", "condition", "gender", "maths_1", "maths_2", "spelling_1", "spelling_2", "reading_1", "reading_2")) %>% 
   pivot_longer(c(-id, -condition)) 
 step1 %>% head(12)
 ```
